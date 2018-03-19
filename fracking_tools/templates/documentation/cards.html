@@ -1,0 +1,18 @@
+{% if categories|length > 0 %}
+  {% for category in categories %}
+    {% if forloop.counter0 > 0 %}
+      <hr class="my-4">
+    {% endif %}
+    <h2 class="text-left mb-4">{{ category.name|safe }} &middot; <em><small class="text-muted">{{ category.description|safe }}</small></em></h2>
+    {% for section in category.section_set.all %}
+      <div class="card my-4">
+        <div class="card-body text-left">
+          <h4 class="card-title mb-4">{{ section.name|safe }}</h4>
+          {{ section.body|safe }}
+        </div>
+      </div>
+    {% endfor %}
+  {% endfor %}
+{% else %}
+<h1 class="display-4 text-muted">The documentation is empty.</h1>
+{% endif %}

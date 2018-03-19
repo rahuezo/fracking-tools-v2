@@ -34,8 +34,8 @@ button, .btn {
   border: none;
 }
 
-.card-footer a {
-  width: 75%;
+.transparent-element {
+  pointer-events: none;
 }
 
 #networks-built-alert, #empty-fields-alert {

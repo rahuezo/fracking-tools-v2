@@ -47,6 +47,7 @@ function inputsAreValid(inputs) {
 const config = {
     fileInput: 'file-input',
     outputZipname: 'output-zipname',
+    outputEventsCsv: 'output-events-csv',
     genericZipname: 'untitled.zip',
     buildButton: 'build-matrices-btn',
     msgHolder: '#msg-holder', 
@@ -62,6 +63,8 @@ function reset(inputs) {
 }
 
 function showMessage(msg, msgHolder, type='success') {
+    window.scrollTo(0,0); 
+    
     $(msgHolder).empty(); 
 
     $(msgHolder).html(`<div class="alert alert-${type} alert-dismissible fade show text-center" id="msg-display" role="alert">
@@ -206,19 +209,19 @@ class AdjacencyMatrix {
 }
 
 
-let eventsInterface = `<div id="msg-holder"></div>
+let eventsInterface = `
     <div class="card w-100 my-4">
         <div class="card-body text-left">
         <h4 class="card-title mb-4">1. Upload Event Files</h4>
         <p class="card-text">
-            Upload <strong>.csv</strong> spreadsheet where each column is
-            an event and each cell under an event is an individual that attended
+            Upload <strong>.csv</strong> spreadsheets where each column is
+            an event and each cell under an event is a node that attended
             that event.
         </p>
         </div>
         <div class="card-footer">
         <div class="text-center">
-            <input class="form-control" type="file" id="${config.fileInput}" value="" multiple required>
+            <input class="form-control" type="file" id="${config.fileInput}" value="" accept=".csv" multiple required>
         </div>
         </div>
     </div>
@@ -226,7 +229,7 @@ let eventsInterface = `<div id="msg-holder"></div>
         <div class="card-body text-left">
         <h4 class="card-title mb-4">2. Choose Output <strong>.zip</strong> Name</h4>
         <p class="card-text">
-            Enter the output .zip name without a file extension.
+          Enter a name for the output .zip file.
         </p>
         </div>
         <div class="card-footer">
@@ -264,17 +267,17 @@ let eventsInterface = `<div id="msg-holder"></div>
     </div>
   </div>`; 
 
-let pairsInterface = `<div id="msg-holder"></div>
+let pairsInterface = `
     <div class="card w-100 my-4">
         <div class="card-body text-left">
-        <h4 class="card-title mb-4">1. Upload Individual Pairs Files</h4>
+        <h4 class="card-title mb-4">1. Upload Node Pair Files</h4>
         <p class="card-text">
-            Upload <strong>.csv</strong> spreadsheet with only two columns: individual A column and individual B column. Each row represents unique individual pairs.
+            Upload <strong>.csv</strong> spreadsheets with exactly two columns: node A column and node B column. Each row represents unique node pairs.
         </p>
         </div>
         <div class="card-footer">
         <div class="text-center">
-            <input class="form-control" type="file" id="${config.fileInput}" value="" multiple required>
+            <input class="form-control" type="file" id="${config.fileInput}" value="" accept=".csv" multiple required>
         </div>
         </div>
     </div>
@@ -282,7 +285,7 @@ let pairsInterface = `<div id="msg-holder"></div>
         <div class="card-body text-left">
         <h4 class="card-title mb-4">2. Choose Output <strong>.zip</strong> Name</h4>
         <p class="card-text">
-            Enter the output .zip name without a file extension.
+          Enter a name for the output .zip file.
         </p>
         </div>
         <div class="card-footer">
@@ -293,7 +296,7 @@ let pairsInterface = `<div id="msg-holder"></div>
     </div>
     <div class="card mb-4 w-100 my-4">
         <div class="card-body text-left">
-        <h4 class="card-title mb-4">3. Build Pairs Networks</h4>
+        <h4 class="card-title mb-4">3. Build Node Pair Networks</h4>
         </div>
         <div class="card-footer">
         <div class="text-center">
@@ -321,7 +324,7 @@ let pairsInterface = `<div id="msg-holder"></div>
   </div>`; 
 
 
-let networkComparisonInterface = `<div id="msg-holder"></div>
+let networkComparisonInterface = `
 <div class="card w-100 my-4">
     <div class="card-body text-left">
       <h4 class="card-title mb-4">1. Choose Networks A Files</h4>
@@ -334,7 +337,7 @@ let networkComparisonInterface = `<div id="msg-holder"></div>
         <input id="${config.networkALabel}" class="form-control" type="text" placeholder="Networks A label (e.g. Newspaper Networks)" required>
       </div>
       <div class="form-group">
-        <input class="form-control" type="file" id="${config.networkAFilesInput}" multiple required>
+        <input class="form-control" type="file" id="${config.networkAFilesInput}" accept=".csv" multiple required>
       </div>
     </div>
   </div>
@@ -350,7 +353,7 @@ let networkComparisonInterface = `<div id="msg-holder"></div>
         <input id="${config.networkBLabel}" class="form-control" type="text" placeholder="Networks B label (e.g. Meeting Minutes Networks)" required>
       </div>
       <div class="text-center">
-        <input class="form-control" type="file" id="${config.networkBFilesInput}" multiple required>
+        <input class="form-control" type="file" id="${config.networkBFilesInput}" accept=".csv" multiple required>
       </div>
     </div>
   </div>
@@ -358,7 +361,7 @@ let networkComparisonInterface = `<div id="msg-holder"></div>
     <div class="card-body text-left">
       <h4 class="card-title mb-4">3. Choose Output <strong>.zip</strong> Name</h4>
       <p class="card-text">
-        Enter the output .zip name without a file extension.
+        Enter a name for the output .zip file.
       </p>
     </div>
     <div class="card-footer">
@@ -374,7 +377,7 @@ let networkComparisonInterface = `<div id="msg-holder"></div>
 
     <div class="card-footer">
       <div class="text-center">
-        <button type="button" id="${config.compareButton}" class="btn btn-dark btn-block" name="button">Compare <i class="fa fa-exchange" aria-hidden="true"></i></button>
+        <button type="button" id="${config.compareButton}" class="btn btn-dark btn-block" name="button">Compare <i class="fas fa-exchange-alt" aria-hidden="true"></i></button>
       </div>
     </div>
   </div>
@@ -397,9 +400,51 @@ let networkComparisonInterface = `<div id="msg-holder"></div>
     </div>
   </div>`; 
 
+  let eventsBuilderInterface = `  
+  <div class="card w-100 my-4">
+      <div class="card-body text-left">
+      <h4 class="card-title mb-4">1. Upload Files</h4>
+      <p class="card-text">
+          Upload <strong>.txt</strong> or <strong>.docx</strong> files.
+      </p>
+      </div>
+      <div class="card-footer">
+      <div class="text-center">
+          <input class="form-control" type="file" id="${config.fileInput}" name="input-files" accept=".txt,.docx" multiple required>
+      </div>
+      </div>
+  </div>
+  <div class="card mb-4 w-100 my-4">
+      <div class="card-body text-left">
+      <h4 class="card-title mb-4">2. Choose Output <strong>.csv</strong> Name</h4>
+      <p class="card-text">
+        Enter a name for the output .csv file.
+      </p>
+      </div>
+      <div class="card-footer">
+      <div class="text-center">
+          <input class="form-control" type="text" id="${config.outputEventsCsv}" name="${config.outputEventsCsv}" placeholder="Enter a .csv name" required>
+      </div>
+      </div>
+  </div>
+  <div class="card mb-4 w-100 my-4">
+      <div class="card-body text-left">
+      <h4 class="card-title mb-4">3. Build Events</h4>
+      </div>
+      <div class="card-footer">
+      <div class="text-center">
+          <button type="submit" id="${config.buildButton}" class="btn btn-dark btn-block" name="button">Build <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+      </div>
+      </div>
+  </div>`; 
 
-function setupInterface(holder, interface) {
+
+function setupInterface(holder, interface, params=false) {
+  if (params) {
+    $(holder).html(interface.replace('<PARAMS>', params)); 
+  } else {
     $(holder).html(interface); 
+  }
 }
 
 Set.prototype.union = function(setB) {
@@ -632,14 +677,14 @@ const buildMatrices = async (eventsBool=true) => {
                 let nMatrices = matrices.length;             
                 
                 showMessage(`<i class="fas fa-check"></i> Successfully 
-                        build ${nMatrices} ${nMatrices > 1 ? 'matrices' : 'matrix'} 
+                        built ${nMatrices} ${nMatrices > 1 ? 'matrices' : 'matrix'} 
                         from ${eventsBool ? 'events' : 'individual pair'} ${nMatrices > 1 ? 'files' : 'file'}. ${errorMsg}`, config.msgHolder); 
             } else {
-                showMessage(`<i class="fas fa-times"></i> Couldn't 
+                showMessage(`<i class="fas fa-exclamation-circle"></i> Couldn't 
                             build matrices. ${errorMsg}`, config.msgHolder, type='danger'); 
             }
         } else {
-            showMessage('<i class="fas fa-times"></i> The highlighted fields are required.', config.msgHolder, type='danger'); 
+            showMessage('<i class="fas fa-exclamation-circle"></i> The highlighted fields are required.', config.msgHolder, type='danger'); 
         }
 
     } catch (error) {

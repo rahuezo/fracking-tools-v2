@@ -13,6 +13,8 @@
       </div>
       <div id="content">
         <div class="container text-center">
+          <div id="msg-holder"></div>
+          {% include 'network_tools/read_docs.html' %}
           <div id="holder"></div>
         </div>
       </div>
@@ -34,6 +36,7 @@
 
     <!-- Main JS Code -->
     <script src="{% static 'global/js/main.js' %}" charset="utf-8"></script>
+    <script src="{% static 'global/js/misc.js' %}" charset="utf-8"></script>
 
     <script>
         $(document).ready(function(){

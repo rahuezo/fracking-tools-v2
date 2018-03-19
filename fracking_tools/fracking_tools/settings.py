@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'fthome.apps.FthomeConfig',
     'network_tools.apps.NetworkToolsConfig',
+    'documentation.apps.DocumentationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -11,12 +11,13 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto mr-2 text-center">
       <li class="nav-item m-2 dropdown">
-        <a class="btn btn-primary dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Network Utilities
+        <a class="btn btn-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-wrench"></i> Network Tools
         </a>
         <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="{% url 'network_tools:build_events' %}">Build Events from Files</a>
           <a class="dropdown-item" href="{% url 'network_tools:build_enets' %}">Build Networks from Events</a>
-          <a class="dropdown-item" href="{% url 'network_tools:build_pnets' %}">Build Networks from Individual Pairs</a>
+          <a class="dropdown-item" href="{% url 'network_tools:build_pnets' %}">Build Networks from Node Pairs</a>
           <a class="dropdown-item" href="{% url 'network_tools:compare_nets' %}">Compare Networks</a>
         </div>
       </li>
@@ -33,11 +34,10 @@
           <a class="dropdown-item blurred" href="">OCR Documents</a>
         </div>
       </li>
-
-      <li class="nav-item m-2">
-        <a href="" class="btn btn-warning">Documentation</a>
-      </li>
       {% endcomment %}
+      <li class="nav-item m-2">
+        <a href="{% url 'documentation:index' %}" class="btn btn-warning"><i class="fas fa-book"></i> Documentation</a>
+      </li>
     </ul>
   </div>
 </nav>
