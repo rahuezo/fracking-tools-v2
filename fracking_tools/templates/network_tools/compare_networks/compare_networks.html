@@ -3,10 +3,10 @@
   <head>
     {% load static %}
     <title>Fracking Tools: Compare Networks</title>
-    {% include 'global/head.html' %}
+    {% include 'ftglobal/head.html' %}
   </head>
   <body>
-    {% include 'global/navbar.html' %}
+    {% include 'ftglobal/navbar.html' %}
     <div id="wrapper">
       <div id="header">
         {% include 'network_tools/compare_networks/jumbotron.html' %}
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div id="footer">
-        {% include 'global/footer.html' %}
+        {% include 'ftglobal/footer.html' %}
       </div>
     </div>
 
@@ -35,8 +35,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.js"></script>
 
     <!-- Main JS Code -->
-    <script src="{% static 'global/js/main.js' %}" charset="utf-8"></script>
-    <script src="{% static 'global/js/misc.js' %}" charset="utf-8"></script>
+    <script src="{% static 'ftglobal/js/main.js' %}" charset="utf-8"></script>
+    <script src="{% static 'ftglobal/js/misc.js' %}" charset="utf-8"></script>
 
     <script>
         $(document).ready(function(){
