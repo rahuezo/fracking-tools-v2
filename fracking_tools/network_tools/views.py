@@ -7,15 +7,15 @@ from utils import configuration
 from utils.event_builder import EventBuilder
 from StringIO import StringIO
 from documentation.models import Section
-# from .tasks import build_events_from_files
+from .tasks import build_events_from_files
 
-import csv
+from docx import Document
 
 from networktools.files.readers import FileReader
+import csv
 
 
 def index_view(request):
-
     context = {
         'event_networks_card': configuration.BUILD_NETWORKS_FROM_EVENTS_CARD,
         'pair_networks_card': configuration.BUILD_NETWORKS_FROM_PAIRS_CARD,
@@ -38,8 +38,22 @@ def build_events_now_view(request):
         files = request.FILES.getlist('input-files')
 
         # f = FileReader(files[0].file).read()
-        print files[0].read()
-        # results = build_events_from_files(files)
+        # print ExtensionHandler(files[0].name).get_extension()
+
+        # with open(files[0].file, 'rb') as f: 
+        
+        # reader = FileReader(files[0])
+
+        # print reader.filename
+
+        contents = [FileReader(f).read() for f in files]
+
+
+        results = build_events_from_files.delay(contents)
+
+        print results.ready()
+
+        # print results
 
         # print results
         # rows = EventBuilder(files).create_events()
