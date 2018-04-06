@@ -1,0 +1,19 @@
+from __future__ import absolute_import, unicode_literals
+import os
+from celery import Celery
+
+# set the default Django settings module for the 'celery' program.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fracking_tools.settings')
+os.environ['SNER_ROOT'] = '/home/rahuezo/Downloads/stanford-ner-2018-02-27/'
+os.environ['ONLINE'] = '1'
+
+app = Celery('fracking_tools')
+
+app.config_from_object('django.conf:settings', namespace='CELERY')
+
+# Load task modules from all registered Django app configs.
+app.autodiscover_tasks()
+
+@app.task(bind=True)
+def debug_task(self):
+    print('Request: {0!r}'.format(self.request))

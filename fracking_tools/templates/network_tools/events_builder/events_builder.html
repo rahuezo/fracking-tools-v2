@@ -9,7 +9,7 @@
     {% include 'ftglobal/navbar.html' %}
     <div id="wrapper">
       <div id="header">
-        {% include 'network_tools/events_builder/jumbotron.html' %}
+        {% include 'network_tools/events_builder/jumbotron.html' %}        
       </div>
       <div id="content">
         <div class="container text-center">
@@ -18,6 +18,7 @@
           <form action="{% url 'network_tools:build_events_now' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div id="holder" class="mt-4"></div>
+            {% include 'network_tools/events_builder/steps.html' %}
           </form>
         </div>
       </div>
@@ -40,11 +41,6 @@
     <!-- Main JS Code -->
     <script src="{% static 'ftglobal/js/main.js' %}" charset="utf-8"></script>
     <script src="{% static 'ftglobal/js/misc.js' %}" charset="utf-8"></script>
-
-    <script>
-        $(document).ready(function(){
-            setupInterface('#holder', eventsBuilderInterface);
-        });
-    </script>
+    
   </body>
 </html>

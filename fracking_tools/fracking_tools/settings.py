@@ -131,3 +131,9 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+
+# Celery Config 
+
+CELERY_BROKER_URL = 'pyamqp://'
+CELERY_RESULT_BACKEND = 'rpc://'

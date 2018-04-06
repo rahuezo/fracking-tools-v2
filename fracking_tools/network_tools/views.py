@@ -7,8 +7,11 @@ from utils import configuration
 from utils.event_builder import EventBuilder
 from StringIO import StringIO
 from documentation.models import Section
+# from .tasks import build_events_from_files
 
 import csv
+
+from networktools.files.readers import FileReader
 
 
 def index_view(request):
@@ -34,18 +37,84 @@ def build_events_now_view(request):
         output_csv_file = request.POST.get('output-events-csv')
         files = request.FILES.getlist('input-files')
 
-        rows = EventBuilder(files).create_events()
+        # f = FileReader(files[0].file).read()
+        print files[0].read()
+        # results = build_events_from_files(files)
 
-        if rows:
-            memory_file = StringIO()
-            csv.writer(memory_file).writerows(rows)
-            response = HttpResponse(memory_file.getvalue().replace('nan', ''), content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename={}'.format(output_csv_file
-                                                                               if output_csv_file.lower().endswith('.csv')
-                                                                               else '{}.csv'.format(output_csv_file))
-            return response
+        # print results
+        # rows = EventBuilder(files).create_events()
+
+        # if rows:
+        #     memory_file = StringIO()
+        #     csv.writer(memory_file).writerows(rows)
+        #     response = HttpResponse(memory_file.getvalue().replace('nan', ''), content_type='text/csv')
+        #     response['Content-Disposition'] = 'attachment; filename={}'.format(output_csv_file
+        #                                                                        if output_csv_file.lower().endswith('.csv')
+        #                                                                        else '{}.csv'.format(output_csv_file))
+        #     return response
 
     return redirect('network_tools:build_events')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def build_events_networks_view(request):
