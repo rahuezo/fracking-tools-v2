@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Results Page</title>
+</head>
+<body>
+    <form action="{% url 'network_tools:results' %}">
+        <input type="text" name="task-id" placeholder="Enter task id">
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if task_id %}
+    <br><br>
+    Showing results for <strong>{{ task_id }}</strong>
+    {{ work.exists }}
+    {% endif %}
+</body>
+</html>

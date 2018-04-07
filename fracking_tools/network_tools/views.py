@@ -14,6 +14,8 @@ from docx import Document
 from networktools.files.readers import FileReader
 import csv
 
+from celery.result import AsyncResult
+from fracking_tools.celery import app
 
 def index_view(request):
     context = {
@@ -24,6 +26,18 @@ def index_view(request):
     }
     return render(request, 'network_tools/index.html', context)
 
+
+def results_view(request): 
+    context = {}
+
+    if request.method == 'GET': 
+        task_id = request.GET.get('task-id')  
+        if task_id: 
+            work = AsyncResult(task_id, app=app)
+            context['task_id'] = task_id
+            context['work'] = work
+
+    return render(request, 'network_tools/results.html', context)
 
 def build_events_view(request):
     context = {
@@ -51,7 +65,7 @@ def build_events_now_view(request):
 
         results = build_events_from_files.delay(contents)
 
-        print results.ready()
+        print results.get()
 
         # print results
 
