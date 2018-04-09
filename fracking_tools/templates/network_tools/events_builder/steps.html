@@ -20,18 +20,26 @@
             <input class="form-control" type="text" id="output-events-csv" name="output-events-csv" placeholder="e.g. 2010 Events, NY Events, CA Events, etc." required>
         </div>
     </div>
-</div>
+</div>  
 
 <div class="card w-100 my-4">
-        <div class="card-body text-left">
-            <h4 class="card-title mb-4">3. Build Events</h4>
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="form-group">
-                <button type="submit" id="build-matrices-btn" class="btn btn-dark btn-block" name="button">Build <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
-            </div>
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">3. Build Events</span></h4>
+        {% if request.GET.csv %}
+            <p class="lead" id="task-status">{{ request.GET.csv }}.csv was downloaded!</p>
+        {% endif %}
+    </div>
+    <div class="card-footer">
+        <div class="form-group" id="btn-content">
+            {% if request.GET.task %}
+                <button type="submit" id="build-matrices-btn" class="btn btn-dark btn-block" name="button"> 
+                    Building <i class="fas fa-spinner fa-spin"></i>
+                </button>
+            {% else %}
+                <button type="submit" id="build-matrices-btn" class="btn btn-dark btn-block" name="button"> 
+                    Build <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </button>
+            {% endif %}
         </div>
     </div>
+</div>

@@ -15,11 +15,13 @@
         <div class="container text-center">
           <div id="msg-holder"></div>
           {% include 'network_tools/read_docs.html' %}
-          <form action="{% url 'network_tools:build_events_now' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div id="holder" class="mt-4"></div>
-            {% include 'network_tools/events_builder/steps.html' %}
-          </form>
+          <div class="collapsed" id="steps-collapse">
+            <form action="{% url 'network_tools:build_events_now' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div id="holder" class="mt-4"></div>
+              {% include 'network_tools/events_builder/steps.html' %}
+            </form>
+          </div>
         </div>
       </div>
       <div id="footer">
@@ -29,7 +31,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
@@ -42,5 +44,51 @@
     <script src="{% static 'ftglobal/js/main.js' %}" charset="utf-8"></script>
     <script src="{% static 'ftglobal/js/misc.js' %}" charset="utf-8"></script>
     
+    <script>
+    {% if request.GET.task %}
+      let interval = 10; 
+      let intervalId; 
+
+      $(document).ready(function(){
+          window.scrollTo(0,document.body.scrollHeight);
+          setTimeout(checkTaskStatus, 0); 
+          intervalId = setInterval(checkTaskStatus, interval); 
+      });
+
+      function checkTaskStatus() {
+        $.ajax({
+          url: "{% url 'network_tools:check_task_status' %}",
+          data: {'task-id': '{{ request.GET.task }}'},
+          dataType: 'json',
+          success: statusCheck
+        }); 
+      }
+
+      function statusCheck(data) {
+        console.log(data.status); 
+        if (data.status == 'SUCCESS') {
+          clearInterval(intervalId); 
+          
+          $('#btn-content').html(
+            `<button type="submit" id="build-matrices-btn" class="btn btn-dark btn-block disabled" name="button" disabled> 
+              Finished <i class="fas fa-check"></i>
+            </button>`
+          ); 
+          downloadEvents(); 
+
+          setTimeout(resetEventsBuilder, 3000); 
+        }
+      }
+      
+      function resetEventsBuilder() {
+        window.location.replace("{% url 'network_tools:build_events' %}");
+      }
+
+      function downloadEvents() {
+        window.location.replace("{% url 'network_tools:download_events' %}?task={{ request.GET.task }}&csv={{ request.GET.csv }}");
+      }
+
+    {% endif %}
+    </script>
   </body>
 </html>

@@ -15,7 +15,8 @@
     {% if task_id %}
     <br><br>
     Showing results for <strong>{{ task_id }}</strong>
-    {{ work.exists }}
+    {{ work.status }}
+    {{ work.ready }}
     {% endif %}
 </body>
 </html>

@@ -5,12 +5,16 @@ from networktools.events.builder import EventBuilder
 
 
 @shared_task
-def build_events_from_files(list_of_content):
-    contents = []
+def build_events_from_files(files):
+    builder = EventBuilder(files)
+    return builder.build() 
 
-    for content in list_of_content: 
-        contents.append(len(content))
-    return contents 
-    
-    # builder = EventBuilder(files)
-    # return builder.build()
+
+@shared_task
+def build_event_networks(files): 
+    return 
+
+
+@shared_task
+def build_pair_networks(files): 
+    return 

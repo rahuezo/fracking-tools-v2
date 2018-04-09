@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
-from utils import configuration
-from utils.event_builder import EventBuilder
-from StringIO import StringIO
-from documentation.models import Section
-from .tasks import build_events_from_files
+from django.http import JsonResponse
 
-from docx import Document
+from utils import configuration
+from documentation.models import Section
 
 from networktools.files.readers import FileReader
-import csv
 
+from .tasks import build_events_from_files
 from celery.result import AsyncResult
 from fracking_tools.celery import app
+
+import csv
+
 
 def index_view(request):
     context = {
@@ -47,41 +47,41 @@ def build_events_view(request):
 
 
 def build_events_now_view(request):
-    if request.method == 'POST':
+    response = redirect('network_tools:build_events')
+
+    if request.method == 'POST' and request.FILES and request.POST.get('output-events-csv'):
         output_csv_file = request.POST.get('output-events-csv')
-        files = request.FILES.getlist('input-files')
+        files = [(f.name, FileReader(f).read()) for f in request.FILES.getlist('input-files')]
+        results = build_events_from_files.delay(files)
 
-        # f = FileReader(files[0].file).read()
-        # print ExtensionHandler(files[0].name).get_extension()
+        response['Location'] += '?task={}&csv={}'.format(results, output_csv_file)
+    return response
 
-        # with open(files[0].file, 'rb') as f: 
+
+def check_task_status(request): 
+    task_id = request.GET.get('task-id')
+    task = AsyncResult(task_id, app=app)    
+    return JsonResponse({'status': task.status})
+
+
+def download_events_file_view(request): 
+    if request.method == 'GET' and request.GET.get('task') and request.GET.get('csv'):         
+        task_id = request.GET.get('task')
+        output_csv = request.GET.get('csv')
         
-        # reader = FileReader(files[0])
+        task = AsyncResult(task_id, app=app)
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment;filename="{}.csv"'.format(output_csv)
+        
+        writer = csv.writer(response)
 
-        # print reader.filename
-
-        contents = [FileReader(f).read() for f in files]
-
-
-        results = build_events_from_files.delay(contents)
-
-        print results.get()
-
-        # print results
-
-        # print results
-        # rows = EventBuilder(files).create_events()
-
-        # if rows:
-        #     memory_file = StringIO()
-        #     csv.writer(memory_file).writerows(rows)
-        #     response = HttpResponse(memory_file.getvalue().replace('nan', ''), content_type='text/csv')
-        #     response['Content-Disposition'] = 'attachment; filename={}'.format(output_csv_file
-        #                                                                        if output_csv_file.lower().endswith('.csv')
-        #                                                                        else '{}.csv'.format(output_csv_file))
-        #     return response
-
+        for row in task.get(): 
+            writer.writerow(row)
+        return response
     return redirect('network_tools:build_events')
+
+
 
 
 

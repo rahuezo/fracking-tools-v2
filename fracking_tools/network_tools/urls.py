@@ -9,9 +9,11 @@ app_name = 'network_tools'
 
 urlpatterns = [
     url(r'^$', views.index_view, name='index'),
+    url(r'^ajax/check-task-status/', views.check_task_status, name='check_task_status'),    
     url(r'^results/$', views.results_view, name='results'),
     url(r'^build-events/$', views.build_events_view, name='build_events'),
-    url(r'^build-events/build/', views.build_events_now_view, name='build_events_now'),
+    url(r'^build-events/download-events/$', views.download_events_file_view, name='download_events'),
+    url(r'^build-events/build/$', views.build_events_now_view, name='build_events_now'),
     url(r'^build-events-networks/', views.build_events_networks_view, name='build_enets'),
     url(r'^build-pairs-networks/$', views.build_pairs_networks_view, name='build_pnets'),
     url(r'^compare-networks/$', views.compare_networks_view, name='compare_nets'),
