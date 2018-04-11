@@ -25,18 +25,16 @@
 <div class="card w-100 my-4">
     <div class="card-body text-left">
         <h4 class="card-title mb-4">3. Build Events</span></h4>
-        {% if request.GET.csv %}
-            <p class="lead" id="task-status">{{ request.GET.csv }}.csv was downloaded!</p>
-        {% endif %}
+        <p class="card-text task-status">Click below to start building events file.</p>
     </div>
     <div class="card-footer">
-        <div class="form-group" id="btn-content">
+        <div class="form-group" id="run-btn">
             {% if request.GET.task %}
-                <button type="submit" id="build-matrices-btn" class="btn btn-dark btn-block" name="button"> 
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
                     Building <i class="fas fa-spinner fa-spin"></i>
                 </button>
             {% else %}
-                <button type="submit" id="build-matrices-btn" class="btn btn-dark btn-block" name="button"> 
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
                     Build <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                 </button>
             {% endif %}

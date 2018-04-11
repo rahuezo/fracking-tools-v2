@@ -12,13 +12,11 @@
         {% include 'network_tools/events_builder/jumbotron.html' %}        
       </div>
       <div id="content">
-        <div class="container text-center">
-          <div id="msg-holder"></div>
+        <div class="container text-center">          
           {% include 'network_tools/read_docs.html' %}
           <div class="collapsed" id="steps-collapse">
             <form action="{% url 'network_tools:build_events_now' %}" method="post" enctype="multipart/form-data">
               {% csrf_token %}
-              <div id="holder" class="mt-4"></div>
               {% include 'network_tools/events_builder/steps.html' %}
             </form>
           </div>
@@ -43,52 +41,34 @@
     <!-- Main JS Code -->
     <script src="{% static 'ftglobal/js/main.js' %}" charset="utf-8"></script>
     <script src="{% static 'ftglobal/js/misc.js' %}" charset="utf-8"></script>
-    
-    <script>
+        
     {% if request.GET.task %}
-      let interval = 10; 
-      let intervalId; 
+      <script>
+        let interval = 1000; 
+        let intervalId; 
+        let taskUrl = '{% url "network_tools:check_task_status" %}';
+        let taskData = '{{ request.GET.task }}'; 
+        let windowHomeUrl = '{% url "network_tools:build_events" %}'; 
+        let downloadUrl = '{% url "network_tools:download_events" %}?task={{ request.GET.task }}&csv={{ request.GET.csv }}'; 
+        let successMessage = 'Finished building events file!'; 
+        let downloadMessage = 'Downloaded events file! Resetting events builder...'; 
 
-      $(document).ready(function(){
+        $(document).ready(function(){
+          // Scroll window to bottom to show that process is running
           window.scrollTo(0,document.body.scrollHeight);
+
+          // Show user that task is starting 
+          $('.task-status').html('Currently building events file. <span class="text-danger"><strong>Do not refresh the page!</strong></span>'); 
+
+          // Run the first task status check
           setTimeout(checkTaskStatus, 0); 
-          intervalId = setInterval(checkTaskStatus, interval); 
-      });
 
-      function checkTaskStatus() {
-        $.ajax({
-          url: "{% url 'network_tools:check_task_status' %}",
-          data: {'task-id': '{{ request.GET.task }}'},
-          dataType: 'json',
-          success: statusCheck
-        }); 
-      }
-
-      function statusCheck(data) {
-        console.log(data.status); 
-        if (data.status == 'SUCCESS') {
-          clearInterval(intervalId); 
-          
-          $('#btn-content').html(
-            `<button type="submit" id="build-matrices-btn" class="btn btn-dark btn-block disabled" name="button" disabled> 
-              Finished <i class="fas fa-check"></i>
-            </button>`
-          ); 
-          downloadEvents(); 
-
-          setTimeout(resetEventsBuilder, 3000); 
-        }
-      }
-      
-      function resetEventsBuilder() {
-        window.location.replace("{% url 'network_tools:build_events' %}");
-      }
-
-      function downloadEvents() {
-        window.location.replace("{% url 'network_tools:download_events' %}?task={{ request.GET.task }}&csv={{ request.GET.csv }}");
-      }
-
-    {% endif %}
-    </script>
+          // Start an interval to check task status regularly 
+          intervalId = setInterval(function() {
+            checkTaskStatus(taskUrl, taskData);           
+          }, interval); 
+        });
+      </script>
+    {% endif %}    
   </body>
 </html>

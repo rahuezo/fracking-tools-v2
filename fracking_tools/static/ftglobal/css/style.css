@@ -70,3 +70,8 @@ button, .btn {
 #footer a:hover {
   color: #FFF;
 }
+
+
+.transparent {
+  background: rgba(10, 10, 10, 0.5); 
+}
