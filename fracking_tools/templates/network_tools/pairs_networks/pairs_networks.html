@@ -13,9 +13,11 @@
       </div>
       <div id="content">
         <div class="container text-center">
-          <div id="msg-holder"></div>
           {% include 'network_tools/read_docs.html' %}
-          <div id="holder" class="mt-4"></div>
+          <form action="{% url 'network_tools:build_pnets_now' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'network_tools/pairs_networks/steps.html' %}
+          </form>
         </div>
       </div>
       <div id="footer">
@@ -25,25 +27,54 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
-    <!-- NECESSARY FOR FILE SAVING -->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.js"></script>
 
     <!-- Main JS Code -->
     <script src="{% static 'ftglobal/js/main.js' %}" charset="utf-8"></script>
     <script src="{% static 'ftglobal/js/misc.js' %}" charset="utf-8"></script>
 
-    <script>
+    {% if request.GET.task %}
+      <script>
+        let interval = 1000; 
+        let intervalId; 
+        let taskUrl = '{% url "network_tools:check_task_status" %}';
+        let taskData = '{{ request.GET.task }}'; 
+        let windowHomeUrl = '{% url "network_tools:build_pnets" %}'; 
+        let downloadUrl = '{% url "network_tools:download_networks" %}?task={{ request.GET.task }}&zip={{ request.GET.zip }}'; 
+        let successMessage = 'Finished building networks!'; 
+        let downloadMessage = 'Downloaded networks! Resetting node pairs networks builder...'; 
+
         $(document).ready(function(){
-            let events = false;
-            setupInterface('#holder', events ? eventsInterface : pairsInterface);
-            document.querySelector('button#build-matrices-btn').addEventListener('click', () => buildMatrices(eventsBool=events));
+          
+          // Scroll window to bottom to show that process is running
+          window.scrollTo(0,document.body.scrollHeight);
+
+          // Show user that task is starting 
+          $('.task-status').html('Currently building networks from node pairs files. <span class="text-danger"><strong>Do not refresh the page!</strong></span>'); 
+
+          // Run the first task status check
+          setTimeout(checkTaskStatus, 0); 
+
+          // Start an interval to check task status regularly 
+          intervalId = setInterval(function() {
+            checkTaskStatus(taskUrl, taskData);           
+          }, interval); 
         });
-    </script>
+      </script>
+      {% else %}
+      <script>
+        $(document).ready(function(){
+          $('#header-check').on('change', function(){
+            if(this.checked) {
+              $(this).val('True'); 
+            } else {
+              $(this).val('False'); 
+            }
+          });
+        }); 
+      </script>
+    {% endif %} 
   </body>
 </html>

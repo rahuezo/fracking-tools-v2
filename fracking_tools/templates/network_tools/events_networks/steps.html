@@ -1,0 +1,57 @@
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">1. Upload Files</h4>
+        <p class="card-text">Upload one or multiple <strong>.csv</strong> event files (LINK TO EVENT FILES).</p>        
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <input class="form-control" type="file" id="file-input" name="input-files" accept=".csv" multiple required>
+        </div>
+    </div>
+</div>
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">2. Events Files Header Check</h4>    
+        <div class="form-group">
+            <div class="form-check px-4">
+                <input class="form-check-input" type="checkbox" id="header-check" name="header-state" value="">
+                <label class="form-check-label" for="header-check">
+                    Check this box if all events files contain headers as the first row.
+                </label>
+            </div>   
+        </div>
+    </div>
+</div>
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">3. Choose Output <strong>.zip</strong> Name</h4>
+        <p class="card-text">Enter a name for the output <strong>.zip</strong> file containing all resulting networks.</p>        
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <input class="form-control" type="text" id="output-zip" name="output-zip" placeholder="e.g. My Newspaper Matrices, Meeting Minute Matrices, N Networks, MM Networks, etc." required>
+        </div>
+    </div>
+</div>  
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">3. Build Events Networks</span></h4>
+        <p class="card-text task-status">Click below to start building networks.</p>
+    </div>
+    <div class="card-footer">
+        <div class="form-group" id="run-btn">
+            {% if request.GET.task %}
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
+                    Building <i class="fas fa-spinner fa-spin"></i>
+                </button>
+            {% else %}
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
+                    Build <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>
