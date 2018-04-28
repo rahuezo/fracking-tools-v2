@@ -1,0 +1,18 @@
+<div class="jumbotron jumbotron-fluid" id="home-banner">
+    <div class="container text-center">
+        <h1 class="display-4 text-dark">Compare Documents</h1>
+        <p class="lead text-dark">Pairwise compare one or many documents.</p>
+        <hr class="my-4">
+        <div class="row my-4">
+            <div class="col-sm-4">
+                <a href="{% url 'document_tools:tag_documents_keywords' %}" class="btn btn-dark btn-block my-1">Tag Documents for Keywords</a>
+            </div>
+            <div class="col-sm-4">
+                <a href="{% url 'document_tools:tag_documents_ner' %}" class="btn btn-dark btn-block my-1">Tag Documents with NER</a>
+            </div>
+            <div class="col-sm-4">
+                <a href="{% url 'document_tools:compute_document_statistics' %}" class="btn btn-dark btn-block my-1">Compute Document Statistics</a>
+            </div>
+        </div>
+    </div>
+</div>

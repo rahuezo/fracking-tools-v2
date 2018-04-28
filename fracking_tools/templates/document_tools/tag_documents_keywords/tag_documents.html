@@ -2,30 +2,30 @@
 <html lang="en">
   <head>
     {% load static %}
-    <title>Fracking Tools: Build Events Networks</title>
+    <title>Fracking Tools: Tag Documents for Keywords</title>
     {% include 'ftglobal/head.html' %}
   </head>
   <body>
     {% include 'ftglobal/navbar.html' %}
     <div id="wrapper">
       <div id="header">
-        {% include 'network_tools/events_networks/jumbotron.html' %}
+        {% include 'document_tools/tag_documents_keywords/jumbotron.html' %}
       </div>
       <div id="content">
-        <div class="container text-center">
-          {% include 'network_tools/read_docs.html' %}
-          <form action="{% url 'network_tools:build_enets_now' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% include 'network_tools/events_networks/steps.html' %}
-          </form>
+          <div class="container text-center">
+            {% include 'document_tools/read_docs.html' %}
+            <form action="{% url 'document_tools:tag_documents_keywords_now' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {% include 'document_tools/tag_documents_keywords/steps.html' %}
+            </form>
+          </div>
         </div>
-      </div>
       <div id="footer">
         {% include 'ftglobal/footer.html' %}
       </div>
     </div>
 
-    <!-- Optional JavaScript -->
+   <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
@@ -39,12 +39,12 @@
       <script>
         let interval = 1000; 
         let intervalId; 
-        let taskUrl = '{% url "network_tools:check_task_status" %}';
+        let taskUrl = '{% url "document_tools:check_task_status" %}';
         let taskData = '{{ request.GET.task }}'; 
-        let windowHomeUrl = '{% url "network_tools:build_enets" %}'; 
-        let downloadUrl = '{% url "network_tools:download_networks" %}?task={{ request.GET.task }}&zip={{ request.GET.zip }}'; 
-        let successMessage = 'Finished building networks!'; 
-        let downloadMessage = 'Downloaded networks! Resetting events network builder...'; 
+        let windowHomeUrl = '{% url "document_tools:tag_documents_keywords" %}'; 
+        let downloadUrl = '{% url "document_tools:download_tagged_documents" %}?task={{ request.GET.task }}&zip={{ request.GET.zip }}'; 
+        let successMessage = 'Finished tagging documents!'; 
+        let downloadMessage = 'Downloaded tagged documents! Resetting document keyword tagger...'; 
 
         $(document).ready(function(){
           
@@ -52,7 +52,7 @@
           window.scrollTo(0,document.body.scrollHeight);
 
           // Show user that task is starting 
-          $('.task-status').html('Currently building networks from events files. <span class="text-danger"><strong>Do not refresh the page!</strong></span>'); 
+          $('.task-status').html('Currently comparing networks. <span class="text-danger"><strong>Do not refresh the page!</strong></span>'); 
 
           // Run the first task status check
           setTimeout(checkTaskStatus, 0); 
@@ -66,21 +66,23 @@
       {% else %}
       <script>
         $(document).ready(function(){
-          $('#header-check').on('change', function(){
-            if(this.checked) {
-              $(this).val('True'); 
-            } else {
-              $(this).val('False'); 
-            }
-          });
+            $('#input-file-error').hide(); 
 
-          $('#weighted-check').on('change', function(){
-            if(this.checked) {
-              $(this).val('True'); 
-            } else {
-              $(this).val('False'); 
-            }
-          });
+            $('#file-input').change(function(){
+                if(!($(this)[0].files.length >= 2)) {
+                    $('#input-file-error').show(); 
+                } else {
+                    $('#input-file-error').hide();
+                }
+            }); 
+
+            $('#header-check').on('change', function(){
+                if(this.checked) {
+                $(this).val('True'); 
+                } else {
+                $(this).val('False'); 
+                }
+            });
         }); 
       </script>
     {% endif %}    

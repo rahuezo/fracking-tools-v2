@@ -2,22 +2,17 @@
 <html lang="en">
   <head>
     {% load static %}
-    <title>Fracking Tools: Home</title>
+    <title>Fracking Tools: Document Tools</title>
     {% include 'ftglobal/head.html' %}
   </head>
   <body>
     {% include 'ftglobal/navbar.html' %}
     <div id="wrapper">
       <div id="header">
-        {% include 'fthome/jumbotron.html' %}
+        {% include 'document_tools/jumbotron.html' %}
       </div>
       <div id="content">
-        <div class="container text-left">
-          <h1 class="mb-4">Network Tools</h2>
-          {% include 'network_tools/display/cards.html' %}
-          <hr>
-          <br>
-          <h1 class="mb-4">Document Tools</h2>
+        <div class="container text-center">
           {% include 'document_tools/display/cards.html' %}
         </div>
       </div>

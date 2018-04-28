@@ -19,6 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^$', include('fthome.urls')),
     url(r'^network-tools/', include('network_tools.urls')),
+    url(r'^document-tools/', include('document_tools.urls')),
     url(r'^documentation/', include('documentation.urls')),
     url(r'^admin/', admin.site.urls),
 ]

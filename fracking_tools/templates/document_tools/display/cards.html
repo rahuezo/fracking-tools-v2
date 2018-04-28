@@ -1,0 +1,52 @@
+<div class="card-deck">
+    <div class="card">
+      <div class="card-body text-left">
+        <h4 class="card-title mb-4">{{ compare_documents.title }}</h4>
+        {{ compare_documents.body|safe }}
+      </div>
+      <div class="card-footer">
+        <div class="text-center">
+          <a href="{% url 'document_tools:compare_documents' %}" class="btn btn-dark btn-block">Compare <i class="fas fa-exchange-alt" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body text-left">
+        <h4 class="card-title mb-4">{{ tag_documents_kwds.title }}</h4>
+        {{ tag_documents_kwds.body|safe }}
+      </div>
+      <div class="card-footer">
+        <div class="text-right">
+          <a href="{% url 'document_tools:tag_documents_keywords' %}" class="btn btn-dark btn-block">Tag <i class="fas fa-tag" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="card-deck my-4">
+  <div class="card">
+    <div class="card-body text-left">
+      <h4 class="card-title mb-4">{{ tag_documents_ner.title }}</h4>
+      {{ tag_documents_ner.body|safe }}
+    </div>
+    <div class="card-footer">
+      <div class="text-right">
+        <a href="{% url 'document_tools:tag_documents_ner' %}" class="btn btn-dark btn-block">Tag <i class="fas fa-tag" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body text-left">
+      <h4 class="card-title mb-4">{{ doc_stats.title }}</h4>
+      {{ doc_stats.body|safe }}
+    </div>
+    <div class="card-footer">
+      <div class="text-right">
+        <a href="{% url 'document_tools:compute_document_statistics' %}" class="btn btn-dark btn-block">Tag <i class="fas fa-tag" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+  

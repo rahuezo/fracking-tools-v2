@@ -1,0 +1,61 @@
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="input-file-error">
+            You must select <strong>at least 2</strong> files to begin comparison!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <h4 class="card-title mb-4">1. Upload Files</h4>
+        <p class="card-text">Upload the files you want to analyze. These files can only be <strong>.txt</strong> or <strong>.docx</strong>.</p>        
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <input class="form-control" type="file" id="file-input" name="input-files" accept=".txt,.docx" multiple required>
+        </div>
+    </div>
+</div>
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">2. Choose Keywords</h4>
+        <p class="card-text">Enter a list of keywords separated by commas.</p>        
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <input class="form-control" type="text" id="keywords-list" name="keywords-list" placeholder="e.g. Fracking, hydraulic fracturing, hydraulic fracking, shale gas, etc." required>
+        </div>
+    </div>
+</div>  
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">3. Choose Output <strong>.csv</strong> Name</h4>
+        <p class="card-text">Enter a name for the output .csv file containing all results.</p>        
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <input class="form-control" type="text" id="output-csv" name="output-csv" placeholder="e.g. My Documents, Analyzed Documents, Analyzed Meeting Minutes, etc." required>
+        </div>
+    </div>
+</div>  
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">4. Compute Document Statistics</span></h4>
+        <p class="card-text task-status">Click below to start computing document statistics.</p>
+    </div>
+    <div class="card-footer">
+        <div class="form-group" id="run-btn">
+            {% if request.GET.task %}
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
+                    Computing <i class="fas fa-spinner fa-spin"></i>
+                </button>
+            {% else %}
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
+                    Compute <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>

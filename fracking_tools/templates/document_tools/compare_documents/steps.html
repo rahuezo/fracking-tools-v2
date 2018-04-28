@@ -1,0 +1,49 @@
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="input-file-error">
+            You must select <strong>at least 2</strong> files to begin comparison!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <h4 class="card-title mb-4">1. Upload Files</h4>
+        <p class="card-text">Upload the files you want to compare. These files can only be <strong>.txt</strong> or <strong>.docx</strong> and you have to upload at least 2 files.</p>        
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <input class="form-control" type="file" id="file-input" name="input-files" accept=".txt,.docx" multiple required>
+        </div>
+    </div>
+</div>
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">2. Choose Output <strong>.csv</strong> Name</h4>
+        <p class="card-text">Enter a name for the output <strong>.csv</strong> file containing all resulting comparisons.</p>        
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <input class="form-control" type="text" id="output-csv" name="output-csv" placeholder="e.g. My document comparisons, Newspaper Comparisons, Meeting Minute Comparisons, etc." required>
+        </div>
+    </div>
+</div>  
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">3. Compare Documents</span></h4>
+        <p class="card-text task-status">Click below to start comparing documents.</p>
+    </div>
+    <div class="card-footer">
+        <div class="form-group" id="run-btn">
+            {% if request.GET.task %}
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
+                    Comparing <i class="fas fa-spinner fa-spin"></i>
+                </button>
+            {% else %}
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
+                    Compare <i class="fas fa-exchange-alt" aria-hidden="true"></i>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>

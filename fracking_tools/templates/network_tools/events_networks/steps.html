@@ -26,7 +26,22 @@
 
 <div class="card w-100 my-4">
     <div class="card-body text-left">
-        <h4 class="card-title mb-4">3. Choose Output <strong>.zip</strong> Name</h4>
+        <h4 class="card-title mb-4">3. Weighted Edges Check</h4>    
+        <p class="card-text">By default networks built from events show binary relationships. Two nodes can either be linked (1) or unlinked (0).  </p>        
+        <div class="form-group">
+            <div class="form-check px-4">
+                <input class="form-check-input" type="checkbox" id="weighted-check" name="weighted-state" value="">
+                <label class="form-check-label" for="weighted-check">
+                    Check this box to build networks with edge weights proportional to the frequency of which two nodes are linked across events.
+                </label>
+            </div>   
+        </div>
+    </div>
+</div>
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">4. Choose Output <strong>.zip</strong> Name</h4>
         <p class="card-text">Enter a name for the output <strong>.zip</strong> file containing all resulting networks.</p>        
     </div>
     <div class="card-footer">
@@ -38,7 +53,7 @@
 
 <div class="card w-100 my-4">
     <div class="card-body text-left">
-        <h4 class="card-title mb-4">3. Build Events Networks</span></h4>
+        <h4 class="card-title mb-4">5. Build Events Networks</span></h4>
         <p class="card-text task-status">Click below to start building networks.</p>
     </div>
     <div class="card-footer">

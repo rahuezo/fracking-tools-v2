@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'fthome.apps.FthomeConfig',
     'network_tools.apps.NetworkToolsConfig',
     'documentation.apps.DocumentationConfig',
+    'document_tools.apps.DocumentToolsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

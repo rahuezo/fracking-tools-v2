@@ -95,11 +95,11 @@ def build_events_networks_now_view(request):
     if request.method == 'POST' and request.FILES and request.POST.get('output-zip'):
         output_zip = request.POST.get('output-zip')
         header_state = True if request.POST.get('header-state') else False
+        weighted_state = True if request.POST.get('weighted-state') else False
 
         
-
         files = request.FILES.getlist('input-files')
-        results = build_event_networks.delay(files, header_state)
+        results = build_event_networks.delay(files, header_state, weighted_state)
 
         response['Location'] += '?task={}&zip={}'.format(results, output_zip)
     return response

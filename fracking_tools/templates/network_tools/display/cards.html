@@ -1,4 +1,4 @@
-<div class="card-deck">
+<div class="card-deck my-4">
   <div class="card">
     <div class="card-body text-left">
       <h4 class="card-title mb-4">{{ build_events.title }}</h4>
@@ -6,7 +6,7 @@
     </div>
     <div class="card-footer">
       <div class="text-center">
-        <a href="{% url 'network_tools:build_events' %}" class="btn btn-dark">Build <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+        <a href="{% url 'network_tools:build_events' %}" class="btn btn-dark btn-block">Build <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
       </div>
     </div>
   </div>
@@ -18,10 +18,13 @@
 
     <div class="card-footer">
       <div class="text-center">
-        <a href="{% url 'network_tools:build_enets' %}" class="btn btn-dark">Build <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+        <a href="{% url 'network_tools:build_enets' %}" class="btn btn-dark btn-block">Build <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
       </div>
     </div>
   </div>
+</div>
+
+<div class="card-deck my-4">
   <div class="card">
     <div class="card-body text-left">
       <h4 class="card-title mb-4">{{ pair_networks_card.title }}</h4>
@@ -29,7 +32,7 @@
     </div>
     <div class="card-footer">
       <div class="text-center">
-        <a href="{% url 'network_tools:build_pnets' %}" class="btn btn-dark">Build <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+        <a href="{% url 'network_tools:build_pnets' %}" class="btn btn-dark btn-block">Build <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
       </div>
     </div>
   </div>
@@ -40,7 +43,7 @@
     </div>
     <div class="card-footer">
       <div class="text-center">
-        <a href="{% url 'network_tools:compare_nets' %}" class="btn btn-dark">Compare <i class="fas fa-exchange-alt" aria-hidden="true"></i></a>
+        <a href="{% url 'network_tools:compare_nets' %}" class="btn btn-dark btn-block">Compare <i class="fas fa-exchange-alt" aria-hidden="true"></i></a>
       </div>
     </div>
   </div>

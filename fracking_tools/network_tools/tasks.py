@@ -5,6 +5,13 @@ from networktools.events.builder import EventBuilder
 from networktools.matrices.matrices import AdjacencyMatrix, NetworkComparison
 from networktools.files.readers import FileReader
 
+
+from documenttools.comparisons.compare import DocumentComparison
+
+
+
+
+
 import csv
 
 
@@ -17,12 +24,12 @@ def build_events_from_files(files):
 
 
 @shared_task
-def build_event_networks(files, header_state):
+def build_event_networks(files, header_state, weighted_state):
     files = [(f.name, csv.reader(f)) for f in files]
     matrices = []
 
     for f in files: 
-        mat_obj = AdjacencyMatrix(f, header=header_state) 
+        mat_obj = AdjacencyMatrix(f, header=header_state, weighted=weighted_state) 
         matrices.append(mat_obj.build())
 
     return matrices
