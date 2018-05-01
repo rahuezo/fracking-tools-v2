@@ -63,28 +63,6 @@
           }, interval); 
         });
       </script>
-      {% else %}
-      <script>
-        $(document).ready(function(){
-            $('#input-file-error').hide(); 
-
-            $('#file-input').change(function(){
-                if(!($(this)[0].files.length >= 2)) {
-                    $('#input-file-error').show(); 
-                } else {
-                    $('#input-file-error').hide();
-                }
-            }); 
-
-            $('#header-check').on('change', function(){
-                if(this.checked) {
-                $(this).val('True'); 
-                } else {
-                $(this).val('False'); 
-                }
-            });
-        }); 
-      </script>
     {% endif %}    
   </body>
 </html>

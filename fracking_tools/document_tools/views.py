@@ -123,7 +123,7 @@ def tag_documents_ner_now_view(request):
 
 def compute_document_statistics_view(request): 
     context = {
-        'section': 'Documentation will go here.'
+        'section': Section.objects.filter(name='Compute Document Statistics')[0]
     }
     return render(request, 'document_tools/document_statistics/document_statistics.html', context)
 
