@@ -1,6 +1,7 @@
 from __future__ import absolute_import, unicode_literals
-import os
 from celery import Celery
+
+import os
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fracking_tools.settings')
@@ -9,7 +10,8 @@ os.environ['ONLINE'] = '1'
 
 app = Celery('fracking_tools')
 
-app.config_from_object('django.conf:settings', namespace='CELERY')
+# app.config_from_object('django.conf:settings', namespace='CELERY')
+app.config_from_object('fracking_tools.settings', namespace='CELERY')
 
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
