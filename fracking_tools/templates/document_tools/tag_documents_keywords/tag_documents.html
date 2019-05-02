@@ -53,7 +53,8 @@
 
           // Show user that task is starting 
           $('.task-status').html('Currently comparing networks. <span class="text-danger"><strong>Do not refresh the page!</strong></span>'); 
-
+          
+          
           // Run the first task status check
           setTimeout(checkTaskStatus, 0); 
 
@@ -62,6 +63,7 @@
             checkTaskStatus(taskUrl, taskData);           
           }, interval); 
         });
+      </script>
     {% endif %}    
   </body>
 </html>
