@@ -90,7 +90,7 @@ else:
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'fracking_tools',
             'USER': 'rudy',
-            'PASSWORD': '23560208',
+            'PASSWORD': 'Im going to build a network',
             'HOST': 'localhost',
             'PORT': '',
         }
