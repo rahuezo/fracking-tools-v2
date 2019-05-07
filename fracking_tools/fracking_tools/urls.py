@@ -17,13 +17,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     url(r'^$', include('fthome.urls')),
     url(r'^network-tools/', include('network_tools.urls')),
     url(r'^document-tools/', include('document_tools.urls')),
     url(r'^documentation/', include('documentation.urls')),
     url(r'^admin/', admin.site.urls),
-]
-
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-urlpatterns += staticfiles_urlpatterns()
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
