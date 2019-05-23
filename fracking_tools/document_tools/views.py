@@ -199,4 +199,4 @@ def check_task_status(request):
     task_id = request.GET.get('task-id')
     task = AsyncResult(task_id, app=app)    
     
-    return JsonResponse({'status': task.status })
+    return JsonResponse({'status': task.status, 'traceback': task.traceback })
