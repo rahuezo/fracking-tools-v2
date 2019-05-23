@@ -43,10 +43,10 @@ def compare_documents_now_view(request):
     if request.method == 'POST' and request.FILES and request.POST.get('output-csv'):
         output_csv_file = request.POST.get('output-csv')
         files = request.FILES.getlist('input-files')
-        # results = compare_documents.delay(files)
-        results = compare_documents(files)
+        results = compare_documents.delay(files)
+        # results = compare_documents(files)
 
-        print "Results: ", results
+        # print "Results: ", results
 
         response['Location'] += '?task={}&csv={}'.format(results, output_csv_file)
     return response
