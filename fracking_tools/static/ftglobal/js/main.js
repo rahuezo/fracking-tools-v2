@@ -30,6 +30,7 @@ function statusCheck(data) {
             resetWindow(windowHomeUrl); 
         }, 5000); 
     }
+    console.log("Status: ", data.status);
 }
 
 function resetWindow(windowHomeUrl) {
