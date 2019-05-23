@@ -108,7 +108,7 @@ def tag_documents_ner_view(request):
 
 
 def tag_documents_ner_now_view(request):
-    response = redirect('document_tools:tag_documents_keywords')
+    response = redirect('document_tools:tag_documents_ner')
 
     if request.method == 'POST' and request.FILES and request.POST.get('output-zip'):
         output_zip_file = request.POST.get('output-zip')
@@ -189,6 +189,8 @@ def download_tagged_documents_view(request):
         response['Content-Disposition'] = 'attachment;filename="{}.zip"'.format(output_zip)
         response['Content-Length'] = zip_io.tell()
 
+        print "Current task ID: ", task_id
+        print "Output Zip: ", output_zip
         return response
     return redirect('document_tools:index')
 

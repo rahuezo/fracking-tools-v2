@@ -1,0 +1,77 @@
+body {
+}
+
+.navbar-brand img {
+  height: 50px;
+}
+
+.navbar-brand {
+  opacity: 0.8;
+  transition: all ease-out 0.2s;
+}
+
+.navbar-brand:hover {
+  opacity: 1;
+}
+.navbar-bg-custom {
+  background: #222;
+}
+
+#home-banner {
+  background: url('../img/banner.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+
+button, .btn {
+  cursor: pointer;
+}
+
+
+.card-footer {
+  background: #FFF;
+  border: none;
+}
+
+.transparent-element {
+  pointer-events: none;
+}
+
+#networks-built-alert, #empty-fields-alert {
+  display: none;
+}
+
+.invisible {
+  display: none;
+}
+
+.blurred {
+  filter: blur(3px);
+  opacity: 0.8;
+  pointer-events: none;
+  user-select: none;
+}
+
+#footer {
+  color: #FFF;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 10vh;
+  background: #111;
+  font-size: 1.2rem;
+}
+
+#footer a {
+  color: #CCC;
+  transition: all ease-out 0.1s;
+}
+
+#footer a:hover {
+  color: #FFF;
+}
+
+
+.transparent {
+  background: rgba(10, 10, 10, 0.5); 
+}
