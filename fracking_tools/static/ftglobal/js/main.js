@@ -30,7 +30,7 @@ function statusCheck(data) {
             resetWindow(windowHomeUrl); 
         }, 5000); 
     } else if (data.status == 'FAILURE') {
-        $('.task-status').text(data.traceback);             
+        $('.task-status').html('<pre class="brush: python">' + data.traceback + '</pre>');             
         $('#run-btn').html(
             `<button type="submit" class="btn btn-dark btn-block disabled" name="button" disabled> 
                 Failed <i class="fa fa-exclamation-triangle"></i>
