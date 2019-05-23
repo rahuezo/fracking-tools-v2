@@ -29,8 +29,14 @@ function statusCheck(data) {
         setTimeout(function() {
             resetWindow(windowHomeUrl); 
         }, 5000); 
+    } else if (data.status == 'FAILURE') {
+        $('.task-status').text(successMessage);             
+        $('#run-btn').html(
+            `<button type="submit" class="btn btn-dark btn-block disabled" name="button" disabled> 
+                Failed <i class="fa fa-exclamation-triangle"></i>
+            </button>`
+        );
     }
-    console.log("Status: ", data.status);
 }
 
 function resetWindow(windowHomeUrl) {
