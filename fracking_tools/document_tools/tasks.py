@@ -11,7 +11,7 @@ from documenttools.taggers.ner import NerTagger
 from documenttools.statistics.statistics import DocumentStatistics
 
 
-# @shared_task
+@shared_task
 def compare_documents(files): 
     files = [(f.name, FileReader(f).read()) for f in files]
     
