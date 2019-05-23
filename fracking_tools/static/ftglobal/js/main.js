@@ -8,6 +8,8 @@ function checkTaskStatus(taskUrl, taskData) {
 }
 
 function statusCheck(data) {
+    console.log("Data: ", data);
+    
     if (data.status == 'SUCCESS') {
         // Stop checking for task status
         clearInterval(intervalId); 
