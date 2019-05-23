@@ -8,8 +8,6 @@ function checkTaskStatus(taskUrl, taskData) {
 }
 
 function statusCheck(data) {
-    console.log("Data: ", data);
-    
     if (data.status == 'SUCCESS') {
         // Stop checking for task status
         clearInterval(intervalId); 
@@ -32,7 +30,7 @@ function statusCheck(data) {
             resetWindow(windowHomeUrl); 
         }, 5000); 
     } else if (data.status == 'FAILURE') {
-        $('.task-status').text(successMessage);             
+        $('.task-status').text(data.traceback);             
         $('#run-btn').html(
             `<button type="submit" class="btn btn-dark btn-block disabled" name="button" disabled> 
                 Failed <i class="fa fa-exclamation-triangle"></i>
