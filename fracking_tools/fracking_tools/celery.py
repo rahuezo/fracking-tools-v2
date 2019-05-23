@@ -5,7 +5,7 @@ import os
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'fracking_tools.settings')
-os.environ['SNER_ROOT'] = '/home/rahuezo/Documents/stanford-ner-2018-10-16'
+os.environ['SNER_ROOT'] = '/home/rudy/fracking-tools-v2/fracking_tools/stanford_ner/stanford-ner-2018-10-16'
 os.environ['ONLINE'] = '1'
 
 app = Celery('fracking_tools')
