@@ -31,7 +31,7 @@ function statusCheck(data) {
         }, 5000); 
     } else if (data.status == 'FAILURE') {
         $('.task-status').html(`<div class="alert alert-danger">
-            <h5 class="mb-4">The task has failed. Send this stack traceback to <a href="mailto:rahuezo@ucdavis.edu?subject=Error at ${window.location.href}&body=${data.traceback}">Rudy Huezo</a></h5>
+            <h5 class="mb-4">The task has failed. Send this stack traceback to <a href="mailto:rahuezo@ucdavis.edu?subject=Error at ${window.location.href}&body=${encodeURICOmponent(data.traceback)}">Rudy Huezo</a></h5>
             <pre class="brush: python">${data.traceback}</pre>
         </div>`);      
 
