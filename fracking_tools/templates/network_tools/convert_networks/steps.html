@@ -1,0 +1,43 @@
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">1. Upload Files</h4>
+        <p class="card-text">Upload one or multiple <strong>.csv</strong> network files.</p>        
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <input class="form-control" type="file" id="file-input" name="input-files" accept=".csv" multiple required>
+        </div>
+    </div>
+</div>
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">2. Choose Output <strong>.rda</strong> Name</h4>
+        <p class="card-text">Enter a name for the output <strong>.rda</strong> serialized r-networks file.</p>        
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <input class="form-control" type="text" id="output-rda" name="output-rda" placeholder="e.g. My Networks, All Networks, etc." required>
+        </div>
+    </div>
+</div>  
+
+<div class="card w-100 my-4">
+    <div class="card-body text-left">
+        <h4 class="card-title mb-4">3. Convert Matrices</span></h4>
+        <p class="card-text task-status">Click below to start the conversion.</p>
+    </div>
+    <div class="card-footer">
+        <div class="form-group" id="run-btn">
+            {% if request.GET.task %}
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
+                    Converting <i class="fas fa-spinner fa-spin"></i>
+                </button>
+            {% else %}
+                <button type="submit" class="btn btn-dark btn-block" name="button"> 
+                    Convert <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</div>

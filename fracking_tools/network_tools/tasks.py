@@ -8,7 +8,8 @@ from networktools.files.readers import FileReader
 
 from documenttools.comparisons.compare import DocumentComparison
 
-
+from r_network_serializer.rnetwork import RNetwork
+from r_network_serializer.serialize import to_listvector, rserialize
 
 
 
@@ -60,3 +61,12 @@ def compare_networks(files, labelA, labelB):
             comparisons.append(comp_obj.compare())
 
     return comparisons
+
+
+
+@shared_task
+def convert_matrices_to_rnetworks(files): 
+    networks = [RNetwork(f).serialize_ready for f in files]
+    networks_lv = to_listvector(networks)
+    serialized = rserialize(networks_lv)
+    return serialized

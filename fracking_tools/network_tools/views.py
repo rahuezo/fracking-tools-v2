@@ -4,13 +4,16 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.http import JsonResponse
+from django.http import FileResponse
+
+import io
 
 from utils import configuration
 from documentation.models import Section
 
 from networktools.files.readers import FileReader
 
-from .tasks import build_events_from_files, build_event_networks, build_pairs_networks, compare_networks
+from .tasks import build_events_from_files, build_event_networks, build_pairs_networks, compare_networks, convert_matrices_to_rnetworks
 from celery.result import AsyncResult
 from fracking_tools.celery import app
 
@@ -23,7 +26,9 @@ def index_view(request):
         'pair_networks_card': configuration.BUILD_NETWORKS_FROM_PAIRS_CARD,
         'compare_networks': configuration.COMPARE_NETWORKS_CARD,
         'build_events': configuration.BUILD_EVENTS_FROM_FILES_CARD,
+        'convert_to_r_networks': configuration.CONVERT_MATRICES_TO_R_NETWORKS
     }
+
     return render(request, 'network_tools/index.html', context)
 
 
@@ -106,7 +111,6 @@ def build_events_networks_now_view(request):
 
 # End events networks parts 
 
-
 # Pairs networks parts 
 
 def build_pairs_networks_view(request):
@@ -131,6 +135,41 @@ def build_pairs_networks_now_view(request):
 
 # End pairs networks parts 
 
+# Convert matrices to R-Networks 
+
+def convert_matrices_to_rnetworks_view(request):
+    context = {
+        'section': Section.objects.filter(name='Convert Adjacency Matrices to R-Networks')[0],
+    }
+    return render(request, 'network_tools/convert_networks/convert_networks.html', context)
+
+def convert_matrices_to_rnetworks_now_view(request):
+    response = redirect('network_tools:convert_to_rnetworks')
+
+    if request.method == 'POST' and request.FILES and request.POST.get('output-rda'):
+        output_rda_file = request.POST.get('output-rda')
+        files = request.FILES.getlist('input-files')
+        results = convert_matrices_to_rnetworks.delay(files)
+
+        response['Location'] += '?task={}&rda={}'.format(results, output_rda_file)
+    return response
+
+def download_rnetworks_view(request): 
+    if request.method == 'GET' and request.GET.get('task') and request.GET.get('rda'):         
+        task_id = request.GET.get('task')
+        output_rda = request.GET.get('rda')
+        
+        task = AsyncResult(task_id, app=app)
+        
+        stream = io.BytesIO(task.get())
+
+        response = FileResponse(stream, content_type='application/octet-stream')
+        response['Content-Disposition'] = 'inline;filename="{}.rda"'.format(output_rda)
+        
+        return response
+    return redirect('network_tools:convert_to_rnetworks')
+
+# End convert matrices to R-Networks
 
 # Download networks
 

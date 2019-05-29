@@ -47,6 +47,20 @@ COMPARE_NETWORKS_CARD = {
     """
 }
 
+CONVERT_MATRICES_TO_R_NETWORKS = {
+    'title': 'Convert Adjacency Matrices to R-Networks',
+    'body': """<p class="card-text">
+        One or many network files (adjacency matrices) are converted to R-Networks and then serialized 
+        into a <strong>.rda</strong> file. The serialized networks can then be loaded in R using
+        <code>readRDS(...)</code>.
+        <p class="card-text">This tool requires <strong>.csv</strong> network files.</p>        
+        """,
+    'info': """<p class="card-text text-muted text-center">
+        <a class="btn btn-link">Read More</a>
+        </p>
+    """
+}
+
 BUILD_EVENTS_FROM_FILES_CARD = {
     'title': 'Build Events from Files',
     'body': """<p class="card-text">

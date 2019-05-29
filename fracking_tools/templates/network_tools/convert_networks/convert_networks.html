@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <title>Fracking Tools: Build Events from Files</title>
+    {% include 'ftglobal/head.html' %}
+  </head>
+  <body>
+    {% include 'ftglobal/navbar.html' %}
+    <div id="wrapper">
+      <div id="header">
+        {% include 'network_tools/convert_networks/jumbotron.html' %}        
+      </div>
+      <div id="content">
+        <div class="container text-center">          
+          {% include 'network_tools/read_docs.html' %}
+          <form action="{% url 'network_tools:convert_to_rnetworks_now' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'network_tools/convert_networks/steps.html' %}
+          </form>
+        </div>
+      </div>
+      <div id="footer">
+        {% include 'ftglobal/footer.html' %}
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <!-- Main JS Code -->
+    <script src="{% static 'ftglobal/js/main.js' %}" charset="utf-8"></script>
+    <script src="{% static 'ftglobal/js/misc.js' %}" charset="utf-8"></script>
+        
+    {% if request.GET.task %}
+      <script>
+        let interval = 1000; 
+        let intervalId; 
+        let taskUrl = '{% url "network_tools:check_task_status" %}';
+        let taskData = '{{ request.GET.task }}'; 
+        let windowHomeUrl = '{% url "network_tools:convert_to_rnetworks" %}'; 
+        let downloadUrl = '{% url "network_tools:download_rnetworks" %}?task={{ request.GET.task }}&rda={{ request.GET.rda }}'; 
+        let successMessage = 'Finished converting matrices!'; 
+        let downloadMessage = 'Downloaded r-networks! Resetting converter...'; 
+
+        $(document).ready(function(){
+          // Scroll window to bottom to show that process is running
+          window.scrollTo(0,document.body.scrollHeight);
+
+          // Show user that task is starting 
+          $('.task-status').html('Currently converting adjacency matrices. <span class="text-danger"><strong>Do not refresh the page!</strong></span>'); 
+
+          // Run the first task status check
+          setTimeout(checkTaskStatus, 0); 
+
+          // Start an interval to check task status regularly 
+          intervalId = setInterval(function() {
+            checkTaskStatus(taskUrl, taskData);           
+          }, interval); 
+        });
+      </script>
+    {% endif %}    
+  </body>
+</html>

@@ -27,6 +27,13 @@ urlpatterns = [
     url(r'^compare-networks/download$', views.download_network_comparisons_view, name='download_comparisons'),
 
     url(r'^download/$', views.download_networks_view, name='download_networks'),
+
+    # Convert adjacency matrices to R-networks
+    
+    url(r'^convert-to-r-networks/$', views.convert_matrices_to_rnetworks_view, name='convert_to_rnetworks'),
+    url(r'^convert-to-r-networks/convert$', views.convert_matrices_to_rnetworks_now_view, name='convert_to_rnetworks_now'),
+    url(r'^convert-to-r-networks/download$', views.download_rnetworks_view, name='download_rnetworks'),
+
 ]
 
 if settings.DEBUG:
